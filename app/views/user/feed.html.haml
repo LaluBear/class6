@@ -1,0 +1,21 @@
+%p#notice= notice
+
+.d-flex.flex-row.bd-highlight.mb-3
+  .p-2.bd-highlight
+    - if(@posts)
+      - @posts.each do |post|
+        = post.msg
+        = post.created_at
+        %br
+  .p-2.bd-highlight
+    %p
+      %b Email:
+      = @user.email
+    %p
+      %b Name:
+      = @user.name
+    %p
+      %b Password:
+      = @user.password
+    = link_to 'New Post', "/new_post"
+  <div class="d-flex align-items-stretch">...</div>

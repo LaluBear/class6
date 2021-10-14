@@ -22,7 +22,9 @@ class UsersController < ApplicationController
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
-
+    puts user_params
+    puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    
     respond_to do |format|
       if @user.save
         format.html { redirect_to @user, notice: "User was successfully created." }
@@ -55,6 +57,10 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def user_profile
+    @user = User.find_by(name: params[:name])
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -64,6 +70,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:email, :name, :age, :password_digest)
+      params.require(:user).permit(:email, :name, :password)
     end
 end

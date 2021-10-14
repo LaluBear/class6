@@ -1,0 +1,6 @@
+%p#notice= notice
+
+= simple_form_for @post, url: "/create_post" do |f|
+  = f.input :msg
+  = f.input :user_id, as: :hidden
+  = f.button :submit

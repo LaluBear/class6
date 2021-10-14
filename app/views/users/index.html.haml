@@ -7,10 +7,10 @@
 %table
   %thead
     %tr
+      %th Id
       %th Email
       %th Name
-      %th Age
-      %th Password digest
+      %th Password
       %th
       %th
       %th
@@ -18,11 +18,11 @@
   %tbody
     - @users.each do |user|
       %tr
+        %td= user.id
         %td= user.email
         %td= user.name
-        %td= user.age
-        %td= user.password_digest
-        %td= link_to 'Show', user
+        %td= user.password
+        %td= link_to 'Show', "users/#{user.id}"
         %td= link_to 'Edit', edit_user_path(user)
         %td= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }
 

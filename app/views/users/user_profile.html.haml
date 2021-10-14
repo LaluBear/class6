@@ -1,5 +1,9 @@
 %p#notice= notice
 
+= @user.posts.all.each{|post|
+  = post.msg
+  = post.created_at
+}
 %p
   %b Email:
   = @user.email
@@ -7,7 +11,10 @@
   %b Name:
   = @user.name
 %p
-  %b Password digest:
+  %b Age:
+  = @user.age
+%p
+  %b Password:
   = @user.password
 
 = link_to 'Edit', edit_user_path(@user)

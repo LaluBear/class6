@@ -1,4 +1,4 @@
-= simple_form_for @user do |f|
+= simple_form_for @user, url_for: @user do |f|
   = f.input :email
   = f.input :name
   = f.button :submit

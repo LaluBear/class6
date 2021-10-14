@@ -1,6 +1,9 @@
 %h1 Editing user
 
-= render 'form'
+= simple_form_for @user, method: :patch do |f|
+  = f.input :email
+  = f.input :name
+  = f.button :submit
 
 = link_to 'Show', @user
 \|
