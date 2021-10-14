@@ -16,6 +16,8 @@
     %p
       %b Password:
       = @user.password
-    
-    = link_to 'Follow', "/profile/#{@user.name}"
+    - if(@is_follow)
+      = link_to 'Unfollow', "/unfollow/#{@user.id}"
+    - else
+      = link_to 'Follow', "/follow/#{@user.id}"
   <div class="d-flex align-items-stretch">...</div>

@@ -6,7 +6,11 @@ Rails.application.routes.draw do
   get '/main', to: 'user#login'
   
   get '/new_post', to: 'user#new_post'
+  get '/follow/:id', to: 'user#follow'
+  get '/unfollow/:id', to: 'user#unfollow'
+  get '/new_user', to: 'user#new_user'
   
+  post '/create_user', to: 'user#create_user'
   post '/create_post', to: 'user#create_post'
   post '/login_attempt', to: 'user#login_attempt'
 end

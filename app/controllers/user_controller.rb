@@ -17,12 +17,14 @@ class UserController < ApplicationController
   
   def new_user
     @user = User.new
+  end
   
-  def create_User
-    @post = Post.new(post_params)
-    @post.save
-    redirect_to "/feed"
+  def create_user
+    @user = User.new(user_params)
+    @user.save
+    redirect_to "/main"
     return
+  end
   
   def feed
     @user_id = session[:user_id]
@@ -52,11 +54,26 @@ class UserController < ApplicationController
   
   def user_profile
     @user = User.find_by(name: params[:name])
-    
+    @is_self = @user.id == session[:user_id]
+    @is_follow = Follow.find_by(follower_id: session[:user_id], followee_id: @user.id)
     puts @user
     puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
   end
-
+  
+  def follow
+    @follow = Follow.new(follower_id: session[:user_id], followee_id: params[:id])
+    @user = User.find(params[:id])
+    @follow.save
+    redirect_to "/profile/#{@user.name}"
+  end
+  
+  def unfollow  
+    
+    @follow = Follow.find_by(follower_id: session[:user_id], followee_id: params[:id])
+    @follow.destroy
+    redirect_to "/profile/#{@user.name}"
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def logged_in
