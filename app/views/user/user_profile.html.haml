@@ -18,6 +18,5 @@
       = @user.password
     - if(@is_follow)
       = link_to 'Unfollow', "/unfollow/#{@user.id}"
-    - else
+    - else if(!@is_self)
       = link_to 'Follow', "/follow/#{@user.id}"
-  <div class="d-flex align-items-stretch">...</div>
