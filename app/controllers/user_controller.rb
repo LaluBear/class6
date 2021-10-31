@@ -29,16 +29,11 @@ class UserController < ApplicationController
   def feed
     @user_id = session[:user_id]
     @user = User.find(@user_id)
-    @follows = Follow.where(follower_id: @user_id)
-    @posts = Array(@user.posts)
-    if(@follows)
-    	@follows.each do |follow|
-    	  @posts += Array(User.find(follow.followee_id).posts)
-    	  puts @posts
-          puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    	end
-    	@posts = @posts.sort_by{ |post| [post.created_at] }
-    end
+    @posts = @user.get_feed_post(@user_id)
+    
+    puts @posts
+    puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
   end
   
   def new_post
