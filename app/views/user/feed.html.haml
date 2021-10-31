@@ -4,7 +4,10 @@
   .p-2.bd-highlight
     - if(@posts)
       - @posts.each do |post|
+        = link_to "#{(post.user).name}", "/profile/#{(post.user).name}"
+        %br
         = post.msg
+        %br
         = post.created_at
         %br
   .p-2.bd-highlight

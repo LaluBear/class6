@@ -20,7 +20,7 @@ class UserController < ApplicationController
   end
   
   def create_user
-    @user = User.new(user_params)
+    @user = User.new(email: params[:user][:email], name: params[:user][:name], password: params[:user][:password])
     @user.save
     redirect_to "/main"
     return
@@ -34,7 +34,7 @@ class UserController < ApplicationController
     if(@follows)
     	@follows.each do |follow|
     	  @posts += Array(User.find(follow.followee_id).posts)
-    	  puts @posts.class
+    	  puts @posts
           puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     	end
     	@posts = @posts.sort_by{ |post| [post.created_at] }
@@ -54,7 +54,7 @@ class UserController < ApplicationController
   
   def user_profile
     @user = User.find_by(name: params[:name])
-    @is_self = @user.id == session[:user_id]
+    @is_self = (@user.id == session[:user_id])
     @is_follow = Follow.find_by(follower_id: session[:user_id], followee_id: @user.id)
     puts @user
     puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
@@ -71,6 +71,7 @@ class UserController < ApplicationController
     
     @follow = Follow.find_by(follower_id: session[:user_id], followee_id: params[:id])
     @follow.destroy
+    @user = User.find(params[:id])
     redirect_to "/profile/#{@user.name}"
   end
   
