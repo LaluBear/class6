@@ -2,12 +2,21 @@
 
 one:
   email: MyString
-  name: MyString
-  age: 1
-  password_digest: MyString
+  name: one1
+  password_digest: <%= BCrypt::Password.create('testpassword') %>
 
 two:
   email: MyString
+  name: two2
+  password_digest: <%= BCrypt::Password.create('testpassword') %>
+  
+  
+test_user_1:
+  email: MyString
+  name: test3
+  password_digest: <%= BCrypt::Password.create('testpassword') %>
+  
+test_user_2:
+  email: a
   name: MyString
-  age: 1
-  password_digest: MyString
+  password_digest: <%= BCrypt::Password.create('1') %>

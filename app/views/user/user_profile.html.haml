@@ -10,7 +10,8 @@
         %br
         = post.created_at
         %br
-        = link_to "#{(post.likes).count}", "/like/#{post.id}"
+        = (post.likes).count 
+        %p likes
         #accordionExample.accordion
           .accordion-item
             %h2.accordion-header{:id => "heading#{index}"}
@@ -22,8 +23,6 @@
                   = link_to "#{like.user.name}", "/profile/#{like.user.name}"
                   %br
         %br
-        = (post.likes).count 
-        %p likes
         - if(post.likes.find_by(user_id: session[:user_id]))
           = link_to "unlike ", "/unlike/#{post.id}"
         - else

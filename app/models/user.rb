@@ -5,7 +5,7 @@ class User < ApplicationRecord
   has_many :likes
 
   validates :name, presence: true, uniqueness: true
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true, length: { minimum: 2 }
 
   has_secure_password
 	
@@ -23,5 +23,9 @@ class User < ApplicationRecord
       posts = posts.sort_by{ |post| [post.created_at] }
     end
     return posts
+  end
+  
+  def add_error_login
+    errors.add(:email,"Wrong Email or Password")
   end
 end

@@ -2,6 +2,8 @@
 
 one:
   follower_id: 1
+  followee_id: 2
 
 two:
+  follower_id: 2
   follower_id: 1

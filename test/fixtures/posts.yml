@@ -1,9 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  msg: MyString
+  msg: MyString1
   user: one
 
 two:
-  msg: MyString
+  msg: MyString2
+  user: one
+  
+three:
+  msg: MyString3
   user: two

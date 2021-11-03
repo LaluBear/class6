@@ -3,15 +3,22 @@ class UserController < ApplicationController
   def login
     session[:user_id] = nil
     @user = User.new
+    if(flash[:error]=="Wrong Email or Password!")
+      @user.errors.add(:base,"Wrong Email or Password")
+    end
   end
   
   def login_attempt
+    
     @user = User.find_by(email: params[:user][:email])
+    
     puts params[:user][:email]
     puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     if(@user && @user.authenticate(params[:user][:password]))
       session[:user_id] = @user.id
       redirect_to "/feed"
+    else
+      redirect_to "/main", flash: { error: "Wrong Email or Password!" }
     end
   end
   

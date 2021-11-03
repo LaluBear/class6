@@ -1,5 +1,13 @@
 %p#notice= notice
 = simple_form_for @user, url: "/login_attempt" do |f|
+  - if @user.errors.any?
+    #error
+      %h2
+        = pluralize(@user.errors.count, "error")
+      %ul
+        - @user.errors.each do |error|
+          %li= error.full_message
+
   = f.input :email
   = f.input :password
   = f.button :submit, "Login"
