@@ -10,25 +10,27 @@
         %br
         = post.created_at
         %br%br
-        = (post.likes).count 
-        %p likes
-        #accordionExample.accordion
-          .accordion-item
-            %h2.accordion-header{:id => "heading#{index}"}
-              %button.accordion-button{"aria-controls" => "collapseOne", "aria-expanded" => "false", "data-bs-target" => "#collapse#{index}", "data-bs-toggle" => "collapse", :type => "button"}
-                people who like this post
-            .accordion-collapse.collapse.show{"aria-labelledby" => "heading#{index}", "data-bs-parent" => "#accordionExample", :id => "collapse#{index}"}
-              .accordion-body
-                - post.likes.each do |like|
-                  = link_to "#{like.user.name}", "/profile/#{like.user.name}"
-                  %br
+        %p{ class: "idz"}
+          = "#{(post.likes).count} likes"
+        %button{"data-bs-target" => "#exampleModal", "data-bs-toggle" => "modal", :class => "btn btn-primary show", :id => "id#{index}" , :type => "button"}
+          Show Like People
+
         
         - if(post.likes.find_by(user_id: session[:user_id]))
           = link_to "unlike ", "/unlike/#{post.id}"
         - else
           = link_to "like ", "/like/#{post.id}"
         %br
-        %p -----------------------------------------------------------------
+      .modal.fade{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :id => "exampleModal md", :tabindex => "-1"}
+        .modal-dialog
+          .modal-content
+            .modal-header
+              %h5#exampleModalLabel.modal-title Like People
+              %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "modal", :type => "button"}
+            .modal-body
+      .modal-footer
+        %button.btn.btn-secondary{"data-bs-dismiss" => "modal", :type => "button"} Close
+        %br
   .p-2.bd-highlight
     %p
       %b Email:
@@ -41,3 +43,19 @@
       = @user.password
     = link_to 'New Post', "/new_post"
   <div class="d-flex align-items-stretch">...</div>
+
+
+:javascript
+  console.log("hello")
+  $(".show").click(function(){
+    var Modal = $('md');
+    var post = $(this).prev();
+    var numlike = post.html();
+    var Modaltext = $('modal-body');
+    console.log(post);
+    console.log(numlike);
+    Modaltext.html(numlike);
+    Modal.append("nonono");
+    Modal.show();
+    
+  })

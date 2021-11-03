@@ -10,19 +10,24 @@
         %br
         = post.created_at
         %br
-        = (post.likes).count 
-        %p likes
-        #accordionExample.accordion
-          .accordion-item
-            %h2.accordion-header{:id => "heading#{index}"}
-              %button.accordion-button{"aria-controls" => "collapseOne", "aria-expanded" => "false", "data-bs-target" => "#collapse#{index}", "data-bs-toggle" => "collapse", :type => "button"}
-                people who like this post
-            .accordion-collapse.collapse.show{"aria-labelledby" => "heading#{index}", "data-bs-parent" => "#accordionExample", :id => "collapse#{index}"}
-              .accordion-body
+        = "#{(post.likes).count} likes"
+        %button.btn.btn-primary{"data-bs-target" => "#exampleModal", "data-bs-toggle" => "modal", :type => "button"}
+          Show Like People
+
+        #exampleModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :tabindex => "-1"}
+          .modal-dialog
+            .modal-content
+              .modal-header
+                %h5#exampleModalLabel.modal-title Like People
+                  %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "modal", :type => "button"}
+              .modal-body
+                = "#{(post.likes).count} likes"
                 - post.likes.each do |like|
                   = link_to "#{like.user.name}", "/profile/#{like.user.name}"
                   %br
-        %br
+              .modal-footer
+                %button.btn.btn-secondary{"data-bs-dismiss" => "modal", :type => "button"} Close
+                %br
         - if(post.likes.find_by(user_id: session[:user_id]))
           = link_to "unlike ", "/unlike/#{post.id}"
         - else
