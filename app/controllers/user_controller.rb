@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-  #before_action :logged_in, only: %i[ feed new_post create_post user_profile ]
+  before_action :logged_in, only: %i[ feed new_post create_post user_profile ]
   def login
     session[:user_id] = nil
     @user = User.new
@@ -30,6 +30,7 @@ class UserController < ApplicationController
     @user_id = session[:user_id]
     @user = User.find(@user_id)
     @posts = @user.get_feed_post(@user_id)
+    @showmodal = params[:showmodal]
     
     puts @posts
     puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
@@ -57,17 +58,28 @@ class UserController < ApplicationController
   
   def follow
     @follow = Follow.new(follower_id: session[:user_id], followee_id: params[:id])
-    @user = User.find(params[:id])
     @follow.save
-    redirect_to "/profile/#{@user.name}"
+    redirect_back(fallback_location:"/")
   end
   
   def unfollow  
     
     @follow = Follow.find_by(follower_id: session[:user_id], followee_id: params[:id])
     @follow.destroy
-    @user = User.find(params[:id])
-    redirect_to "/profile/#{@user.name}"
+    redirect_back(fallback_location:"/")
+  end
+  
+  def like
+    @like = Like.new(user_id: session[:user_id], post_id: params[:id])
+    @like.save
+    redirect_back(fallback_location:"/")
+  end
+  
+  def unlike  
+    
+    @like = Like.find_by(user_id: session[:user_id], post_id: params[:id])
+    @like.destroy
+    redirect_back(fallback_location:"/")
   end
   
   private

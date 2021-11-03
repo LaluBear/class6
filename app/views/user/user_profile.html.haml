@@ -3,13 +3,33 @@
 .d-flex.flex-row.bd-highlight.mb-3
   .p-2.bd-highlight
     - if(@user.posts)
-      - @user.posts.each do |post|
+      - @user.posts.each_with_index do |post,index|
         = link_to "#{(post.user).name}", "/profile/#{(post.user).name}"
         %br
         = post.msg
         %br
         = post.created_at
         %br
+        = link_to "#{(post.likes).count}", "/like/#{post.id}"
+        #accordionExample.accordion
+          .accordion-item
+            %h2#headingOne.accordion-header
+              %button.accordion-button{"aria-controls" => "collapseOne", "aria-expanded" => "false", "data-bs-target" => "#collapse#{index}", "data-bs-toggle" => "collapse", :type => "button"}
+                people who like this post
+            .accordion-collapse.collapse.show{"aria-labelledby" => "headingOne", "data-bs-parent" => "#accordionExample", :id => "collapse#{index}"}
+              .accordion-body
+                - post.likes.each do |like|
+                  = link_to "#{like.user.name}", "/profile/#{like.user.name}"
+                  %br
+        %br
+        = (post.likes).count 
+        %p likes
+        - if(post.likes.find_by(user_id: session[:user_id]))
+          = link_to "unlike ", "/unlike/#{post.id}"
+        - else
+          = link_to "like ", "/like/#{post.id}"
+        %br
+        %p -----------------------------------------------------------------
   .p-2.bd-highlight
     %p
       %b Email:

@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get '/new_post', to: 'user#new_post'
   get '/follow/:id', to: 'user#follow'
   get '/unfollow/:id', to: 'user#unfollow'
+  get '/like/:id', to: 'user#like'
+  get '/unlike/:id', to: 'user#unlike'
   get '/new_user', to: 'user#new_user'
   
   post '/create_user', to: 'user#create_user'
