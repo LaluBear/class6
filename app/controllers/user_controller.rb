@@ -22,6 +22,12 @@ class UserController < ApplicationController
     end
   end
   
+  def logout
+    
+    session[:user_id] = nil
+    redirect_to "/main"
+  end
+  
   def new_user
     @user = User.new
   end
@@ -95,6 +101,7 @@ class UserController < ApplicationController
       if(session[:user_id])
         a = 1
       else
+        session[:user_id] = nil
         redirect_to "/main", notice: "Please login"
         return
       end

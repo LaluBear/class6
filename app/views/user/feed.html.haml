@@ -9,10 +9,12 @@
         = post.msg
         %br
         = post.created_at
-        %br%br
+        = post.likes.map{|like| like.user.name}.join("<br>").html_safe
+        %br
+        %br
         %p{ class: "idz"}
           = "#{(post.likes).count} likes"
-        %button{"data-bs-target" => "#exampleModal", "data-bs-toggle" => "modal", :class => "btn btn-primary show", :id => "id#{index}" , :type => "button"}
+        %button{:class => "btn btn-primary show","data-bs-toggle"=>"modal", "data-bs-target"=>"#exampleModal", :type => "button" , "attr" => "#{post.likes.map{|like| like.user.name}.join("<br>").html_safe}"}
           Show Like People
 
         
@@ -21,16 +23,7 @@
         - else
           = link_to "like ", "/like/#{post.id}"
         %br
-      .modal.fade{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :id => "exampleModal md", :tabindex => "-1"}
-        .modal-dialog
-          .modal-content
-            .modal-header
-              %h5#exampleModalLabel.modal-title Like People
-              %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "modal", :type => "button"}
-            .modal-body
-      .modal-footer
-        %button.btn.btn-secondary{"data-bs-dismiss" => "modal", :type => "button"} Close
-        %br
+  %br
   .p-2.bd-highlight
     %p
       %b Email:
@@ -43,20 +36,32 @@
       = @user.password
     = link_to 'New Post', "/new_post"
   <div class="d-flex align-items-stretch">...</div>
+%button.btn.btn-primary{"data-bs-target" => "#exampleModal", "data-bs-toggle" => "modal", :type => "button"}
+  Show like people
+  
+  
 
-
+.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :id => "exampleModal", :tabindex => "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h5#exampleModalLabel.modal-title Like People
+        %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "modal", :type => "button"}
+      .modal-body
+        %p ...aaa
+      .modal-footer
+        %button.btn.btn-secondary{"data-bs-dismiss" => "modal", :type => "button"} Close
+        
 :javascript
   console.log("hello")
   $(".show").click(function(){
-    var Modal = $('md');
     var post = $(this).prev();
     var numlike = post.html();
-    var Modaltext = $('modal-body');
-    console.log(post);
+    var Modal = $('.modal');
+    var Modaltext = $('.modal-body');
     console.log(numlike);
+    console.log($(this).attr("attr"));
     Modaltext.html(numlike);
-    Modal.append("nonono");
-    console.log(@post);
-    Modal.show();
+    Modaltext.html(numlike + "<br>" +$(this).attr("attr"));
     
   })

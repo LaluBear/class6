@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get '/profile/:name', to: 'user#user_profile'
   get '/feed', to: 'user#feed'
   get '/main', to: 'user#login'
+  get '/logout', to: 'user#logout'
   
   get '/new_post', to: 'user#new_post'
   get '/follow/:id', to: 'user#follow'
