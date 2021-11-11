@@ -78,7 +78,8 @@ class UsersTest < ApplicationSystemTestCase
       click_on "like", match: :first
     end
     visit "/profile/#{@user.name}"
-    assert_text "#{user.name}", match: :second
+    click_on "Show Like People", match: :first
+    assert_text "#{@user.name}", match: :first
   end
   
 end

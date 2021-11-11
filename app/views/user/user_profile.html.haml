@@ -9,31 +9,17 @@
         = post.msg
         %br
         = post.created_at
+        - post.likes.map{|like| "<br><a href='/profile/#{like.user.name}'>#{like.user.name}</a>"}.join('').html_safe
         %br
-        = "#{(post.likes).count} likes"
-        %button.btn.btn-primary{"data-bs-target" => "#exampleModal", "data-bs-toggle" => "modal", :type => "button"}
           Show Like People
-
-        #exampleModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :tabindex => "-1"}
-          .modal-dialog
-            .modal-content
-              .modal-header
-                %h5#exampleModalLabel.modal-title Like People
-                  %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "modal", :type => "button"}
-              .modal-body
-                = "#{(post.likes).count} likes"
-                - post.likes.each do |like|
-                  = link_to "#{like.user.name}", "/profile/#{like.user.name}"
-                  %br
-              .modal-footer
-                %button.btn.btn-secondary{"data-bs-dismiss" => "modal", :type => "button"} Close
-                %br
         - if(post.likes.find_by(user_id: session[:user_id]))
           = link_to "unlike ", "/unlike/#{post.id}"
         - else
           = link_to "like ", "/like/#{post.id}"
         %br
-        %p -----------------------------------------------------------------
+        = "#{(post.likes).count} likes"
+        %button{:class => "btn btn-primary show","data-bs-toggle"=>"modal", "data-bs-target"=>"#exampleModal", :type => "button" , "attr" => post.likes.map{|like| "<br><a href='/profile/#{like.user.name}'>#{like.user.name}</a>"}.join('').html_safe}
+          Show Like People
   .p-2.bd-highlight
     %p
       %b Email:
@@ -48,3 +34,29 @@
       = link_to 'Unfollow', "/unfollow/#{@user.id}"
     - elsif(not(@is_self))
       = link_to 'Follow', "/follow/#{@user.id}"
+
+.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :id => "exampleModal", :tabindex => "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h5#exampleModalLabel.modal-title Like People
+        %button.btn-close{"aria-label" => "Close", "data-bs-dismiss" => "modal", :type => "button"}
+      .modal-body
+        %p ...aaa
+      .modal-footer
+        %button.btn.btn-secondary{"data-bs-dismiss" => "modal", :type => "button"} Close
+        
+:javascript
+  console.log("hello")
+  $(".show").click(function(){
+    var post = $(this).prev();
+    var numlike = post.html();
+    var Modal = $('.modal');
+    var Modaltext = $('.modal-body');
+    console.log(numlike);
+    console.log($(this).attr("attr"));
+    Modaltext.html(numlike);
+    Modaltext.html(numlike + "<br>" +$(this).attr("attr"));
+    
+  })      
+

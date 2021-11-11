@@ -9,20 +9,20 @@
         = post.msg
         %br
         = post.created_at
-        = post.likes.map{|like| like.user.name}.join("<br>").html_safe
+        - post.likes.map{|like| "<br><a href='/profile/#{like.user.name}'>#{like.user.name}</a>"}.join('').html_safe
         %br
-        %br
-        %p{ class: "idz"}
-          = "#{(post.likes).count} likes"
-        %button{:class => "btn btn-primary show","data-bs-toggle"=>"modal", "data-bs-target"=>"#exampleModal", :type => "button" , "attr" => "#{post.likes.map{|like| like.user.name}.join("<br>").html_safe}"}
-          Show Like People
-
-        
         - if(post.likes.find_by(user_id: session[:user_id]))
           = link_to "unlike ", "/unlike/#{post.id}"
         - else
           = link_to "like ", "/like/#{post.id}"
         %br
+        %br
+        %p{ class: "idz"}
+          = "#{(post.likes).count} likes"
+        %button{:class => "btn btn-primary show","data-bs-toggle"=>"modal", "data-bs-target"=>"#exampleModal", :type => "button" , "attr" => post.likes.map{|like| "<br><a href='/profile/#{like.user.name}'>#{like.user.name}</a>"}.join('').html_safe}
+          Show Like People
+        %br
+        
   %br
   .p-2.bd-highlight
     %p
