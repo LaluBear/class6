@@ -29,9 +29,22 @@
 %br
 
 = link_to 'New User', new_user_path
+.container.table-container
+  .row
+    .col-md-8.col-md-offset-2
+      %table#ajax-table.display
+
+
 
 
 :javascript
-  $(document).ready( function () {
-    $('#myTable').DataTable();
-} );
+  $('#ajax-table').DataTable({
+  ajax: '/get_dataset',
+  columns: [
+    {title: 'Name', data: 'name'},
+    {title: 'Email', data: 'email'},
+    {title: 'ID', data: 'id'}
+  ]
+  });
+  $.fn.dataTable.ext.errMode = 'throw';
+);

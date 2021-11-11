@@ -95,6 +95,13 @@ class UserController < ApplicationController
     redirect_back(fallback_location:"/")
   end
   
+  
+  def get_dataset
+    render json: { data: User.all }
+  end
+  
+  
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def logged_in

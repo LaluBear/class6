@@ -13,6 +13,12 @@ Rails.application.routes.draw do
   get '/unlike/:id', to: 'user#unlike'
   get '/new_user', to: 'user#new_user'
   
+  
+  get 'get_dataset', to: 'user#get_dataset'
+  
+  
+  
+  
   post '/create_user', to: 'user#create_user'
   post '/create_post', to: 'user#create_post'
   post '/login_attempt', to: 'user#login_attempt'

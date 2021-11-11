@@ -26,6 +26,9 @@ gem 'haml'
 gem 'haml-rails'
 gem 'simple_form'
 gem 'rexml'
+gem 'ajax-datatables-rails'
+gem 'jquery-rails'
+gem 'bootstrap-sass'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
